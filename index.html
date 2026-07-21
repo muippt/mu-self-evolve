@@ -174,26 +174,26 @@ footer{padding:40px 0;border-top:1px solid var(--border-light);background:var(--
 <div class="cards-grid">
 <div class="card">
 <div class="card-icon">🔍</div>
-<h3><span data-en="VFM Deterministic Verification" data-zh="VFM 确定性验算">VFM 确定性验算</span></h3>
-<p><span data-en="LLM proposes a rule → Python script verifies it with actual data (recurrence, cross-task scope, resolution rate). Confidence ≥70 required for promotion. Inspired by GSME's propose-and-verify separation." data-zh="LLM 提议规则 → Python 脚本用实际数据验证（复现次数、跨任务数、解决率）。置信度≥70 才能提升。受 GSME 提议与验证分离启发。">LLM 提议规则 → Python 脚本用实际数据验证（复现次数、跨任务数、解决率）。置信度≥70 才能提升。受 GSME 提议与验证分离启发。</span></p>
-<div class="card-tag"><span data-en="Script-verified" data-zh="脚本验证">脚本验证</span></div>
+<h3><span data-en="Don't Trust, Verify" data-zh="别光听 AI 自己说">别光听 AI 自己说</span></h3>
+<p><span data-en="The agent says “I learned this!” — but a Python script checks actual data first: how many times did this recur? Across how many tasks? Only verified rules enter permanent memory." data-zh="Agent 说「我学到了！」——但 Python 脚本先查实际数据：复现了几次？跨了几个任务？只有验过的规则才能进永久记忆。">Agent 说「我学到了！」——但 Python 脚本先查实际数据：复现了几次？跨了几个任务？只有验过的规则才能进永久记忆。</span></p>
+<div class="card-tag"><span data-en="Data-verified" data-zh="数据验证">数据验证</span></div>
 </div>
 <div class="card">
 <div class="card-icon">🪶</div>
-<h3><span data-en="Score + Decay Eviction" data-zh="评分+衰减淘汰">评分+衰减淘汰</span></h3>
-<p><span data-en="Effective score = VFM × 0.5^(age/30). 30-day half-life ensures stale entries fade naturally. High-recurrence entries are exempt. Replaces naive line-count truncation. Inspired by CrewAI." data-zh="有效分 = VFM × 0.5^(age/30)。30天半衰期确保过时条目自然消退。高复现条目豁免。替代简单行数截断。受 CrewAI 启发。">有效分 = VFM × 0.5^(age/30)。30天半衰期确保过时条目自然消退。高复现条目豁免。替代简单行数截断。受 CrewAI 启发。</span></p>
-<div class="card-tag"><span data-en="30-day half-life" data-zh="30天半衰期">30天半衰期</span></div>
+<h3><span data-en="Memories Fade Like a Brain" data-zh="记忆会像人脑一样遗忘">记忆会像人脑一样遗忘</span></h3>
+<p><span data-en="Memories nobody touches for 30 days lose half their score. Memories referenced regularly stay fresh. Proven-useful ones are permanently exempt — they've earned their place." data-zh="30 天没人碰的记忆分数减半。被引用的记忆保持新鲜。证明有用的记忆永久豁免——它们已赢得自己的位置。">30 天没人碰的记忆分数减半。被引用的记忆保持新鲜。证明有用的记忆永久豁免——它们已赢得自己的位置。</span></p>
+<div class="card-tag"><span data-en="Auto-forgetting" data-zh="自动遗忘">自动遗忘</span></div>
 </div>
 <div class="card">
 <div class="card-icon">🏷️</div>
-<h3><span data-en="WHERE×WHY Pathology Keys" data-zh="WHERE×WHY 病理键">WHERE×WHY 病理键</span></h3>
-<p><span data-en="Every error tagged with WHERE (error stage: skill_load, mcp_call, file_write…) and WHY (root cause: param_missing, token_expired, timeout…). 10+11 built-in tags, user-customizable. No more vague narratives." data-zh="每条错误标注 WHERE（出错环节：skill_load、mcp_call、file_write…）和 WHY（根因：param_missing、token_expired、timeout…）。10+11 内置标签，支持自定义。告别模糊叙事。">每条错误标注 WHERE（出错环节：skill_load、mcp_call、file_write…）和 WHY（根因：param_missing、token_expired、timeout…）。10+11 内置标签，支持自定义。告别模糊叙事。</span></p>
+<h3><span data-en="Every Mistake Gets a Diagnosis" data-zh="每个错误都有病历">每个错误都有病历</span></h3>
+<p><span data-en="Not just “something failed” — each error is tagged with WHERE (which step?) and WHY (root cause?). Spot patterns at a glance: “80% of errors are in API calls, caused by token expiration.”" data-zh="不只是「出错了」——每条错误标注 WHERE（哪一步？）和 WHY（为什么？）。一眼看出规律：「80% 的错误都在 API 调用，根因都是 token 过期。」">不只是「出错了」——每条错误标注 WHERE（哪一步？）和 WHY（为什么？）。一眼看出规律：「80% 的错误都在 API 调用，根因都是 token 过期。」</span></p>
 <div class="card-tag"><span data-en="21 tags + custom" data-zh="21标签+自定义">21标签+自定义</span></div>
 </div>
 <div class="card">
 <div class="card-icon">🧪</div>
-<h3><span data-en="Bias Audit (Blind Curator Defense)" data-zh="评委偏差审计（盲人策展人防御）">评委偏差审计（盲人策展人防御）</span></h3>
-<p><span data-en="Injects 5 synthetic test entries with known properties, runs them through actual eviction logic, reports PASS/FAIL. Prevents silent mechanism degradation. Inspired by 'The Blind Curator' (2025)." data-zh="注入5条已知属性的合成测试条目，用实际淘汰逻辑运行，报告PASS/FAIL。防止淘汰机制静默失效。受「盲人策展人」(2025) 启发。">注入5条已知属性的合成测试条目，用实际淘汰逻辑运行，报告PASS/FAIL。防止淘汰机制静默失效。受「盲人策展人」(2025) 启发。</span></p>
+<h3><span data-en="The Garbage Collector Tests Itself" data-zh="清道夫会给自己做体检">清道夫会给自己做体检</span></h3>
+<p><span data-en="What if the cleaning mechanism itself is broken, silently deleting good memories? Fake test entries with known properties are injected to verify the system handles each correctly. Any mismatch = bug found." data-zh="如果清理机制本身坏了，在默默删好记忆呢？注入已知属性的假测试条目，验证系统是否正确处理每条。任何不匹配 = 发现 bug。">如果清理机制本身坏了，在默默删好记忆呢？注入已知属性的假测试条目，验证系统是否正确处理每条。任何不匹配 = 发现 bug。</span></p>
 <div class="card-tag"><span data-en="5/5 PASS guarantee" data-zh="5/5 PASS 保障">5/5 PASS 保障</span></div>
 </div>
 </div>

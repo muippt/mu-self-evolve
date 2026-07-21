@@ -37,51 +37,51 @@
 
 ### ✨ Core Highlights
 
-#### VFM Deterministic Verification
+#### Don't Trust, Verify — The AI Can't Promote Itself
 
-Traditional approaches rely on LLM self-assessment to decide which experiences deserve promotion. This is unreliable — LLMs can hallucinate confidence. mu-self-evolve implements a **propose-and-verify separation** (inspired by GSME, 2025):
+AI agents are great at spotting patterns, but terrible at judging whether those patterns are worth remembering permanently. An agent might say "I've learned this rule is important!" — but how do you know it's not hallucinating confidence?
+
+mu-self-evolve separates **proposing** from **verifying**. The agent proposes a rule, then a Python script checks actual data: how many times has this error recurred? Across how many different tasks? Has the proposed solution actually been confirmed to work? Only when the data backs it up does the rule get promoted to permanent memory.
+
+Think of it like a student who claims they've mastered a topic — you don't just take their word for it, you give them a test with real questions.
 
 | Step | Who | What |
 |------|-----|------|
-| Propose | LLM | Identifies a pattern and proposes a rule |
-| Verify | Script (`vfm_verify.py`) | Counts recurrence, cross-task scope, resolution rate, pathology concentration → outputs confidence score 0–100 |
-| Promote | Gate | Confidence ≥70 + Recurrence ≥2 + VFM ≥50 → promote to permanent memory |
+| Propose | Agent | "I noticed this pattern keeps happening" |
+| Verify | Script | Counts recurrence, cross-task scope, resolution rate → confidence score 0–100 |
+| Promote | Gate | Confidence ≥70 + Recurrence ≥2 → write to permanent memory |
 
-#### Score + Decay Eviction
+#### Memories Fade Naturally — Like a Human Brain
 
-Replaces line-count hard truncation with a time-decay scoring model (inspired by CrewAI's half-life decay):
+Most memory systems either keep everything forever (until you manually delete) or truncate by line count (delete the oldest entries when the file gets too long). Both are bad: forever-keeping means noise drowns signal; line-count truncation might delete a crucial rule just because it's old.
+
+mu-self-evolve uses a **time-decay formula** — each memory's importance score naturally decreases over time, just like how you forget the details of a book you read months ago, but vividly remember lessons that keep coming up in conversations.
+
+Memories that get referenced regularly get their freshness reset. Memories that nobody touches for 30 days lose half their score. But memories that have proven useful across multiple tasks are permanently exempt — they've earned their place.
 
 ```
 effective_score = VFM × 0.5^(days_since_last_seen / 30)
 ```
 
-| State | Condition | Action |
-|-------|-----------|--------|
-| Promoted | status=promoted | Move to permanent memory |
-| Resolved + old | status=resolved AND >30 days | Archive |
-| High recurrence | Recurrence ≥2 | **Exempt** (overrides score and age) |
-| Single + old | Recurrence=1 AND >14 days | Mark dormant, archive |
-| Low score + old | effective<25 AND >14 days | Archive |
-| Normal | effective≥25 OR <14 days | Keep |
+#### Every Mistake Gets a Diagnosis, Not Just a Description
 
-#### WHERE×WHY Pathology Keys
+When something goes wrong, most systems log "Error: something failed." That's about as useful as a doctor writing "Patient is sick" — you know something happened, but you can't spot patterns.
 
-Every error and learning entry is tagged with a structured pathology key:
+mu-self-evolve tags every error with two labels: **WHERE** (which stage did it happen at?) and **WHY** (what was the root cause?). This turns a pile of vague error logs into a structured matrix where you can instantly see patterns like "huh, 80% of our errors are in the MCP call stage, and the root cause is always token expiration."
 
-**WHERE tags** (error stage): `skill_load` · `mcp_call` · `file_write` · `api_call` · `browser_op` · `memory_op` · `agent_dispatch` · `prompt_parse` · `auth` · `other`
+**WHERE** (where did it break): `skill_load` · `mcp_call` · `file_write` · `api_call` · `browser_op` · `memory_op` · `agent_dispatch` · `prompt_parse` · `auth` · `other`
 
-**WHY tags** (root cause): `param_missing` · `token_expired` · `timing_race` · `perm_denied` · `knowledge_gap` · `format_mismatch` · `timeout` · `logic_error` · `config_drift` · `user_correction` · `other`
+**WHY** (why did it break): `param_missing` · `token_expired` · `timing_race` · `perm_denied` · `knowledge_gap` · `format_mismatch` · `timeout` · `logic_error` · `config_drift` · `user_correction` · `other`
 
-Both tag sets support user customization — add your own domain-specific tags as your agent encounters new environments.
+Both sets are customizable — add your own tags as your agent encounters new environments.
 
-#### Bias Audit (The Blind Curator Defense)
+#### The Garbage Collector Tests Itself
 
-Inspired by "The Blind Curator" (2025) — if the eviction mechanism itself has a bias, it will silently kill valuable entries while the operator believes the system is working correctly. The `bias_audit.py` script:
+Here's a scary thought: what if the memory-cleaning mechanism itself is broken, silently deleting valuable memories while everything looks fine on the surface? You'd never know — the system reports "archived 5 entries" and you trust it, not realizing 3 of those should have been kept.
 
-1. Creates 5 synthetic test entries with known properties (should-keep, should-archive, should-override, etc.)
-2. Runs them through the actual eviction logic
-3. Compares actual results against expected results
-4. Reports PASS/FAIL — any FAIL means the eviction logic has a bug
+This is called "The Blind Curator" problem. mu-self-evolve defends against it by **injecting fake test entries with known properties** into the system — entries that are designed to be kept, archived, or exempted. After running the eviction logic, it checks whether each fake entry was handled correctly. Any mismatch means the eviction logic has a bug.
+
+Think of it like a quality inspector who tests the quality inspector — if the checking mechanism itself is broken, everything looks fine when it's not.
 
 ---
 
