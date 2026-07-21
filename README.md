@@ -37,7 +37,7 @@
 
 ### ✨ Core Highlights
 
-#### Don't Trust, Verify — The AI Can't Promote Itself
+#### 🔍 Don't Trust, Verify — The AI Can't Promote Itself
 
 AI agents are great at spotting patterns, but terrible at judging whether those patterns are worth remembering permanently. An agent might say "I've learned this rule is important!" — but how do you know it's not hallucinating confidence?
 
@@ -51,7 +51,7 @@ Think of it like a student who claims they've mastered a topic — you don't jus
 | Verify | Script | Counts recurrence, cross-task scope, resolution rate → confidence score 0–100 |
 | Promote | Gate | Confidence ≥70 + Recurrence ≥2 → write to permanent memory |
 
-#### Memories Fade Naturally — Like a Human Brain
+#### 🪶 Memories Fade Naturally — Like a Human Brain
 
 Most memory systems either keep everything forever (until you manually delete) or truncate by line count (delete the oldest entries when the file gets too long). Both are bad: forever-keeping means noise drowns signal; line-count truncation might delete a crucial rule just because it's old.
 
@@ -63,7 +63,7 @@ Memories that get referenced regularly get their freshness reset. Memories that 
 effective_score = VFM × 0.5^(days_since_last_seen / 30)
 ```
 
-#### Every Mistake Gets a Diagnosis, Not Just a Description
+#### 🏷️ Every Mistake Gets a Diagnosis, Not Just a Description
 
 When something goes wrong, most systems log "Error: something failed." That's about as useful as a doctor writing "Patient is sick" — you know something happened, but you can't spot patterns.
 
@@ -75,7 +75,7 @@ mu-self-evolve tags every error with two labels: **WHERE** (which stage did it h
 
 Both sets are customizable — add your own tags as your agent encounters new environments.
 
-#### The Garbage Collector Tests Itself
+#### 🧪 The Garbage Collector Tests Itself
 
 Here's a scary thought: what if the memory-cleaning mechanism itself is broken, silently deleting valuable memories while everything looks fine on the surface? You'd never know — the system reports "archived 5 entries" and you trust it, not realizing 3 of those should have been kept.
 
