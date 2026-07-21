@@ -87,14 +87,14 @@ Think of it like a quality inspector who tests the quality inspector — if the 
 
 ### 📌 Comparison
 
-| Feature | mu-self-evolve | Raw Memory Files | Mem0 | Zep |
-|---------|---------------|-------------------|------|-----|
-| Daily auto-sedimentation | ✅ 6-step workflow | ❌ Manual | ❌ API-only | ❌ API-only |
-| Deterministic verification | ✅ Script-based | ❌ | ✅ LLM-as-editor | ❌ |
-| Time-decay eviction | ✅ 30-day half-life | ❌ | ✅ Half-life | ✌️ Dual-timeline |
+| Feature | mu-self-evolve | Raw Memory Files | Cloud Memory API | Vector Database |
+|---------|---------------|-------------------|------------------|------------------|
+| Daily auto-sedimentation | ✅ 6-step workflow | ❌ Manual | ❌ API-only | ❌ Requires integration |
+| Deterministic verification | ✅ Script-based | ❌ | ✌️ LLM self-assessment | ❌ |
+| Time-decay eviction | ✅ 30-day half-life | ❌ | ✌️ Yes | ✌️ Yes |
 | Pathology archiving (WHERE×WHY) | ✅ Structured tags | ❌ | ❌ | ❌ |
 | Bias audit | ✅ Defect injection | ❌ | ❌ | ❌ |
-| Active Skill synthesis | ✅ Cluster → draft | ❌ | ❌ | ✌️ Dreaming |
+| Active Skill synthesis | ✅ Cluster → draft | ❌ | ❌ | ❌ |
 | Cross-environment support | ✅ OpenClaw + Claude Code | N/A | ❌ | ❌ |
 | No external API required | ✅ Fully local | ✅ | ❌ | ❌ |
 
