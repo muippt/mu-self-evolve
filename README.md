@@ -2,7 +2,7 @@
   <img alt="mu-self-evolve" src="assets/default-banner.png" width="100%">
 </p>
 
-# 🧬 mu-self-evolve · AI Agent持续进化系统
+# 🧬 mu-self-evolve · Agent自我反思与进化器
 
 > A continuous self-evolution system for AI Agents — daily experience sedimentation + weekly error reflection, turning scattered conversations into structured persistent memory.
 
