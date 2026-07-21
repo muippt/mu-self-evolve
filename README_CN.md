@@ -177,14 +177,4 @@ openclaw cron add --name "🧬 每日自我进化" --cron "30 19 * * *" --messag
 
 [MIT](LICENSE) © 2026 muippt
 
-本项目借鉴了以下研究的洞察：
-
-- **ExpeL**（arXiv:2308.10144）— 经验提取双层检索（案例+规则）
-- **Reflexion**（arXiv:2303.11366）— 语言化反思作为「语义梯度」
-- **Voyager**（arXiv:2305.16291）— 可执行代码技能库 + 自动课程
-- **MemGPT**（arXiv:2310.08560）— OS 式虚拟内存管理
-- **Generative Agents**（arXiv:2304.03442）— 观察→反思→规划三层记忆
-
-行业参考：CrewAI（半衰期衰减）、Mem0（LLM-as-editor）、ChatGPT Dreaming（异步合成）、Zep（双时间线）。软件工程实践：缺陷注入测试、提议与验证分离模式。
-
 > 声明：本项目大部分内容由 AI 辅助完成。如您认为您的作品被使用但未获得适当署名，请提交 issue。

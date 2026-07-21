@@ -177,14 +177,4 @@ If mu-self-evolve helps your agent get smarter, consider giving it a star ⭐
 
 [MIT](LICENSE) © 2026 muippt
 
-This project builds on insights from the following research:
-
-- **ExpeL** (arXiv:2308.10144) — Experience extraction with dual-layer retrieval
-- **Reflexion** (arXiv:2303.11366) — Linguistic reflection as "semantic gradient"
-- **Voyager** (arXiv:2305.16291) — Executable skill library + automatic curriculum
-- **MemGPT** (arXiv:2310.08560) — OS-style virtual memory management
-- **Generative Agents** (arXiv:2304.03442) — Observation → reflection → planning memory hierarchy
-
-Industry references: CrewAI (half-life decay), Mem0 (LLM-as-editor), ChatGPT Dreaming (async synthesis), Zep (dual-timeline). Software engineering practices: defect injection testing, propose-and-verify pattern.
-
 > Note: Much of this project was co-created with AI assistance. If you believe your work has been used without proper attribution, please open an issue.
