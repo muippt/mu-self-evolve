@@ -25,7 +25,7 @@
 
 🏷️ **WHERE×WHY Pathology Archiving** — Every error is tagged with WHERE (error stage) and WHY (root cause type), enabling structured pattern analysis instead of vague narratives.
 
-🧪 **Bias Audit** — Inject synthetic test entries with known properties to verify the eviction mechanism hasn't silently degraded — preventing "The Blind Curator" problem.
+🧪 **Bias Audit** — Inject synthetic test entries with known properties to verify the eviction mechanism catches them correctly — like a fire drill for your memory system.
 
 🛠️ **Active Skill Synthesis** — When ≥3 entries in the same domain cluster together, automatically generate a Skill draft (SKILL.md skeleton + script framework) for the human to review.
 
@@ -79,7 +79,7 @@ Both sets are customizable — add your own tags as your agent encounters new en
 
 Here's a scary thought: what if the memory-cleaning mechanism itself is broken, silently deleting valuable memories while everything looks fine on the surface? You'd never know — the system reports "archived 5 entries" and you trust it, not realizing 3 of those should have been kept.
 
-This is called "The Blind Curator" problem. mu-self-evolve defends against it by **injecting fake test entries with known properties** into the system — entries that are designed to be kept, archived, or exempted. After running the eviction logic, it checks whether each fake entry was handled correctly. Any mismatch means the eviction logic has a bug.
+mu-self-evolve defends against this using **defect injection testing** — **injecting fake test entries with known properties** into the system — entries that are designed to be kept, archived, or exempted. After running the eviction logic, it checks whether each fake entry was handled correctly. Any mismatch means the eviction logic has a bug.
 
 Think of it like a quality inspector who tests the quality inspector — if the checking mechanism itself is broken, everything looks fine when it's not.
 
@@ -184,9 +184,7 @@ This project builds on insights from the following research:
 - **Voyager** (arXiv:2305.16291) — Executable skill library + automatic curriculum
 - **MemGPT** (arXiv:2310.08560) — OS-style virtual memory management
 - **Generative Agents** (arXiv:2304.03442) — Observation → reflection → planning memory hierarchy
-- **GSME** (2025) — Propose-and-verify separation (LLM diagnosis + deterministic verification)
-- **The Blind Curator** (2025) — Curator bias and silent eviction mechanism failure
 
-Industry references: CrewAI (half-life decay), Mem0 (LLM-as-editor), ChatGPT Dreaming (async synthesis), Zep (dual-timeline).
+Industry references: CrewAI (half-life decay), Mem0 (LLM-as-editor), ChatGPT Dreaming (async synthesis), Zep (dual-timeline). Software engineering practices: defect injection testing, propose-and-verify pattern.
 
 > Note: Much of this project was co-created with AI assistance. If you believe your work has been used without proper attribution, please open an issue.

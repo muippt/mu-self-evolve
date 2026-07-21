@@ -9,8 +9,9 @@ Purpose:
   构造已知属性的合成条目，运行淘汰逻辑，验证淘汰机制是否正常工作。
   如果"已知应被淘汰"的条目没有被识别 → 淘汰阈值需要校准。
 
-This addresses the "Blind Curator" problem: silent failure of eviction
-mechanism when evaluator bias crosses threshold.
+This uses defect injection testing: inject entries with known expected
+outcomes to verify the eviction logic handles each correctly.
+Without this test, silent failures can delete valuable memories undetected.
 
 Does NOT modify real files. Uses a temporary file for testing.
 """
@@ -122,7 +123,7 @@ def run_audit():
     print(f"{'='*70}")
     print(f"")
     print(f"📋 测试目的: 验证淘汰机制是否能正确识别应被归档的条目")
-    print(f"   对标 The Blind Curator (2025): 假通过偏差会静默关闭淘汰机制")
+    print(f"   缺陷注入测试: 验证淘汰逻辑不会误删应保留的条目")
     print(f"")
 
     passed = 0
