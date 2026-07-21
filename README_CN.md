@@ -2,7 +2,7 @@
   <img alt="mu-self-evolve" src="assets/default-banner.png" width="100%">
 </p>
 
-# 🧬 mu-self-evolve ｜ AI Agent持续进化系统
+# 🧬 mu-self-evolve · AI Agent持续进化系统
 
 > AI Agent 持续进化系统 — 每日经验沉淀 + 每周错误反思，让 Agent 像人一样从经验中学习。
 
