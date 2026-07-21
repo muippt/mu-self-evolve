@@ -1,194 +1,192 @@
+<p align="center">
+  <img alt="mu-self-evolve" src="assets/default-banner.png" width="100%">
+</p>
+
 # mu-self-evolve
 
-> AI Agent 持续进化系统 — 让 Agent 像人一样从经验中学习
+> A continuous self-evolution system for AI Agents — daily experience sedimentation + weekly error reflection, turning scattered conversations into structured persistent memory.
 
-## 这是什么
+**English** | [中文](README_CN.md) | [🌐 Landing Page](https://muippt.github.io/mu-self-evolve/)
 
-mu-self-evolve 是一个为 AI Agent（基于 LLM 的智能助手）设计的持续进化系统。它通过**每日经验沉淀 + 每周错误反思**的双周期节律，将散落的对话经验、踩坑记录、木老师纠正转化为结构化的持久记忆，让 Agent 在不更新模型参数的前提下持续变强。
+[![WeChat](https://img.shields.io/badge/muippt-07C160?logo=wechat&logoColor=white)](https://mp.weixin.qq.com/s/v1JSZvlN5fvbOOHvkvXEtA)
+[![Xiaohongshu](https://img.shields.io/badge/muippt-FF2442?logo=xiaohongshu&logoColor=white)](https://xhslink.com/m/ESxtgUNMdl)
+[![Book](https://img.shields.io/badge/Book-Visual%20Team%20Management-BBDDE5?logo=bookstack&logoColor=white)](https://item.m.jd.com/product/14547345.html)
+[![License](https://img.shields.io/github/license/muippt/mu-self-evolve)](LICENSE)
+[![Version](https://img.shields.io/github/v/release/muippt/mu-self-evolve)](https://github.com/muippt/mu-self-evolve/releases)
+[![Stars](https://img.shields.io/github/stars/muippt/mu-self-evolve)](https://github.com/muippt/mu-self-evolve/stargazers)
 
-核心能力：
-- **经验三分法**：LEARNINGS（经验）、ERRORS（错误）、FEATURE_REQUESTS（功能需求）分类记录
-- **VFM 确定性验算**：经验提升前必须通过脚本验证（复现次数、跨任务数、解决率），而非仅靠 LLM 自评
-- **评分+衰减淘汰**：用 `effective_score = VFM × 0.5^(age/30)` 替代行数硬截断，保留高价值记忆
-- **WHERE×WHY 病理归档**：按"出错环节×根因类型"结构化归档，而非模糊的叙事
-- **主动 Skill 合成**：当同类经验积累到阈值时，自动生成新 Skill 草案
-- **评委偏差审计**：每周淘汰前做缺陷注入自检，防止淘汰机制静默失效
+### 💡 Usage Examples
 
-## 快速开始
+🧠 **Daily Experience Sedimentation** — Automatically extract corrections, errors, and positive signals from today's conversations and log them into structured files.
 
-### 安装
+🔍 **VFM Verification** — Before promoting any rule to permanent memory, run deterministic verification scripts that check recurrence count, cross-task scope, and resolution rate.
 
-```bash
-# 克隆仓库
-git clone https://github.com/muippt/mu-self-evolve.git
-cp -r mu-self-evolve <SKILL_DIR>/mu-self-evolve
-```
+🪶 **Score-Based Eviction** — Memory entries decay over time with a 30-day half-life formula; low-value entries are archived automatically while high-recurrence ones are exempt.
 
-### 初始化
+🏷️ **WHERE×WHY Pathology Archiving** — Every error is tagged with WHERE (error stage) and WHY (root cause type), enabling structured pattern analysis instead of vague narratives.
 
-首次运行前，执行初始化脚本创建目录结构：
+🧪 **Bias Audit** — Inject synthetic test entries with known properties to verify the eviction mechanism hasn't silently degraded — preventing "The Blind Curator" problem.
 
-```bash
-cd <SKILL_DIR>/mu-self-evolve
-# 执行初始化（自动检测环境：OpenClaw 或 Claude Code）
-bash -c '
-if [ -d "$HOME/.openclaw/workspace" ]; then
-  WS="$HOME/.openclaw/workspace"
-  LEARNINGS_DIR="$WS/.learnings"
-  NARRATIVES_DIR="$WS/memory/narratives"
-  ARCHIVE_DIR="$WS/memory/archive"
-elif [ -d "$HOME/.claude" ]; then
-  WS="$HOME/.claude/memory"
-  LEARNINGS_DIR="$WS/.learnings"
-  NARRATIVES_DIR="$WS/narratives"
-  ARCHIVE_DIR="$WS/archive"
-else
-  WS="$HOME/.openclaw/workspace"
-  LEARNINGS_DIR="$WS/.learnings"
-  NARRATIVES_DIR="$WS/memory/narratives"
-  ARCHIVE_DIR="$WS/memory/archive"
-fi
-mkdir -p "$LEARNINGS_DIR/archive" "$NARRATIVES_DIR" "$ARCHIVE_DIR"
-for f in LEARNINGS.md ERRORS.md FEATURE_REQUESTS.md; do
-  [ ! -f "$LEARNINGS_DIR/$f" ] && echo "# ${f%.md} Log" > "$LEARNINGS_DIR/$f"
-done
-echo "✅ 初始化完成 | WS=$WS"
-'
-```
+🛠️ **Active Skill Synthesis** — When ≥3 entries in the same domain cluster together, automatically generate a Skill draft (SKILL.md skeleton + script framework) for the human to review.
 
-### 设置定时任务
+⏰ **Scheduled Automation** — Set up daily cron jobs that run the full 6-step evolution workflow, with an extended weekly reflection every Friday.
 
-```bash
-# OpenClaw
-openclaw cron add \
-  --name "🧬 每日自我进化" \
-  --cron "30 19 * * *" \
-  --tz "Asia/Shanghai" \
-  --message "执行每日自我进化流程（见 mu-self-evolve SKILL.md）。今天是周几？如果是周五，额外执行【第六步：周度反思】。"
+📊 **Cross-Environment Support** — Auto-detects OpenClaw, Claude Code, or other LLM agent environments, adapting paths and scheduling automatically.
 
-# Claude Code（系统 crontab）
-crontab -e
-# 添加：
-30 19 * * * cd ~/.claude && claude --prompt "执行每日自我进化流程（见 mu-self-evolve SKILL.md）。"
-```
+---
 
-## 工作流程
+### ✨ Core Highlights
 
-### 每日六步
+#### VFM Deterministic Verification
 
-```
-读取今日日记
-    ↓
-① 读取日记 → 提取事件
-    ↓
-② 分类录入 → LEARNINGS/ERRORS/FEATURE_REQUESTS（含冲突裁决+病理标注）
-    ↓
-③ 检查提升条件 → VFM 验算脚本（确定性验证）
-    ↓
-④ 更新长期记忆 → MEMORY.md（≤80行，超限触发 mini 蒸馏）
-    ↓
-⑤ 子Agent质量回顾
-    ↓
-⑥ 发送摘要
-```
+Traditional approaches rely on LLM self-assessment to decide which experiences deserve promotion. This is unreliable — LLMs can hallucinate confidence. mu-self-evolve implements a **propose-and-verify separation** (inspired by GSME, 2025):
 
-### 周五加跑：周度反思
+| Step | Who | What |
+|------|-----|------|
+| Propose | LLM | Identifies a pattern and proposes a rule |
+| Verify | Script (`vfm_verify.py`) | Counts recurrence, cross-task scope, resolution rate, pathology concentration → outputs confidence score 0–100 |
+| Promote | Gate | Confidence ≥70 + Recurrence ≥2 + VFM ≥50 → promote to permanent memory |
 
-```
-6a. 错误扫描 → 提取重复模式
-6b. Narrative → (WHERE×WHY) 病理矩阵
-6c. 规则提议 → 重复≥2次的错误提炼为行为规则
-6d. MEMORY.md 蒸馏 → 精简到≤80行
-6e. 归档旧日志 → 30天+的日记/叙事移入 archive
-6f. 评分+衰减淘汰 → bias_audit + eviction_score（替代行数硬截断）
-6g. 条目聚类+Skill合成 → ≥3条同类→生成Skill草案
-```
+#### Score + Decay Eviction
 
-## 文件结构
-
-```
-<AGENT_HOME>/workspace/           # 或 ~/.claude/memory/（Claude Code）
-├── MEMORY.md                    # 长期记忆（≤80行）
-├── SOUL.md                      # 行为风格、原则（可选）
-├── TOOLS.md                     # 工具配置（可选）
-├── AGENTS.md                    # 工作流规则（可选）
-├── memory/
-│   ├── YYYY-MM-DD.md            # 每日日记
-│   ├── narratives/              # 周度叙事
-│   └── archive/                 # 30天+归档
-└── .learnings/
-    ├── LEARNINGS.md             # 经验记录（≤500行）
-    ├── ERRORS.md                # 错误记录（≤300行）
-    ├── FEATURE_REQUESTS.md      # 功能需求
-    └── archive/                 # 已提升/已解决/dormant归档
-```
-
-## VFM 评分体系
-
-经验提升为永久记忆前，需通过四维加权评分（≥50分才提升）：
-
-| 维度 | 权重 | 说明 |
-|------|------|------|
-| 高频使用 | ×3 | 这条规则会每天/每周触发吗？ |
-| 减少失败 | ×3 | 能把之前的翻车变成成功吗？（需脚本验算数据） |
-| 减轻木老师负担 | ×2 | 能让木老师少解释一句话吗？ |
-| 节省未来成本 | ×2 | 能让未来的我省时间/token吗？ |
-
-## 淘汰机制
-
-v3.0 用评分+衰减淘汰替代行数硬截断：
+Replaces line-count hard truncation with a time-decay scoring model (inspired by CrewAI's half-life decay):
 
 ```
 effective_score = VFM × 0.5^(days_since_last_seen / 30)
 ```
 
-- 半衰期 30 天（对标 CrewAI）
-- effective_score < 25 且 age > 14天 → 建议归档
-- Recurrence≥2 的条目豁免（跨任务复现覆盖低分）
-- 被检索命中时 Last-Seen 重置 → 衰减重置
+| State | Condition | Action |
+|-------|-----------|--------|
+| Promoted | status=promoted | Move to permanent memory |
+| Resolved + old | status=resolved AND >30 days | Archive |
+| High recurrence | Recurrence ≥2 | **Exempt** (overrides score and age) |
+| Single + old | Recurrence=1 AND >14 days | Mark dormant, archive |
+| Low score + old | effective<25 AND >14 days | Archive |
+| Normal | effective≥25 OR <14 days | Keep |
 
-## 环境兼容
+#### WHERE×WHY Pathology Keys
 
-| 环境 | 路径 | 调度 |
-|------|------|------|
-| **OpenClaw**（主） | `<AGENT_HOME>/workspace/` | `openclaw cron` |
-| **Claude Code** | `~/.claude/` | 系统 crontab |
-| **其他** | 自动检测 | 手动触发 |
+Every error and learning entry is tagged with a structured pathology key:
 
-所有 Python 脚本通过 `env_detect.py` 自动检测环境，无需手动指定路径。
+**WHERE tags** (error stage): `skill_load` · `mcp_call` · `file_write` · `api_call` · `browser_op` · `memory_op` · `agent_dispatch` · `prompt_parse` · `auth` · `other`
 
-## 脚本说明
+**WHY tags** (root cause): `param_missing` · `token_expired` · `timing_race` · `perm_denied` · `knowledge_gap` · `format_mismatch` · `timeout` · `logic_error` · `config_drift` · `user_correction` · `other`
 
-| 脚本 | 用途 |
-|------|------|
-| `scripts/env_detect.py` | 环境自动检测（OpenClaw / Claude Code） |
-| `scripts/vfm_verify.py` | VFM 确定性验算（复现/跨任务/解决率/病理集中度→置信度） |
-| `scripts/eviction_score.py` | 评分+衰减淘汰计算（effective_score） |
-| `scripts/bias_audit.py` | 评委偏差审计（缺陷注入→验证淘汰机制可信度） |
+Both tag sets support user customization — add your own domain-specific tags as your agent encounters new environments.
+
+#### Bias Audit (The Blind Curator Defense)
+
+Inspired by "The Blind Curator" (2025) — if the eviction mechanism itself has a bias, it will silently kill valuable entries while the operator believes the system is working correctly. The `bias_audit.py` script:
+
+1. Creates 5 synthetic test entries with known properties (should-keep, should-archive, should-override, etc.)
+2. Runs them through the actual eviction logic
+3. Compares actual results against expected results
+4. Reports PASS/FAIL — any FAIL means the eviction logic has a bug
+
+---
+
+### 📌 Comparison
+
+| Feature | mu-self-evolve | Raw Memory Files | Mem0 | Zep |
+|---------|---------------|-------------------|------|-----|
+| Daily auto-sedimentation | ✅ 6-step workflow | ❌ Manual | ❌ API-only | ❌ API-only |
+| Deterministic verification | ✅ Script-based | ❌ | ✅ LLM-as-editor | ❌ |
+| Time-decay eviction | ✅ 30-day half-life | ❌ | ✅ Half-life | ✌️ Dual-timeline |
+| Pathology archiving (WHERE×WHY) | ✅ Structured tags | ❌ | ❌ | ❌ |
+| Bias audit | ✅ Defect injection | ❌ | ❌ | ❌ |
+| Active Skill synthesis | ✅ Cluster → draft | ❌ | ❌ | ✌️ Dreaming |
+| Cross-environment support | ✅ OpenClaw + Claude Code | N/A | ❌ | ❌ |
+| No external API required | ✅ Fully local | ✅ | ❌ | ❌ |
+
+---
+
+### 🚀 Workflows
+
+| Workflow | Scenario | Trigger |
+|----------|----------|---------|
+| Daily Evolution (Steps 1-6) | Extract today's experiences, verify, promote, summarize | Scheduled cron (daily) |
+| Weekly Reflection (Steps 6a-6g) | Error scanning, narrative generation, eviction, Skill synthesis | Friday (merged with daily) |
+| On-Demand Recording | User corrects agent or error occurs | Trigger detection (real-time) |
+| Manual Verification | Check a specific rule's confidence | `python3 vfm_verify.py <pattern-key>` |
+| Eviction Audit | Run bias test + score-based cleanup | `python3 bias_audit.py && python3 eviction_score.py` |
+
+---
+
+### ⚙️ Technical Specs
+
+| Item | Description |
+|------|-------------|
+| Runtime | Python 3.8+ (scripts only); any LLM Agent (OpenClaw / Claude Code / Cursor) |
+| Dependencies | Zero external packages — standard library only |
+| Storage | Local markdown files (no database, no API) |
+| Scripts | 4 Python files: `env_detect.py`, `vfm_verify.py`, `eviction_score.py`, `bias_audit.py` |
+| References | 4 docs: `record-templates.md`, `weekly-reflection.md`, `file-structure.md`, `claude-code-compat.md` |
+| Total Size | ~45KB (excluding banner) |
+| Scheduling | `openclaw cron` or system `crontab` |
+
+---
+
+### 🛠️ Quick Start
 
 ```bash
-# 验算某条经验规则
-python3 scripts/vfm_verify.py mcp.token_expired
+# 1. Clone
+git clone https://github.com/muippt/mu-self-evolve.git
 
-# 运行淘汰评分（无参数自动检测环境）
-python3 scripts/eviction_score.py
+# 2. Initialize (auto-detects environment)
+cd mu-self-evolve
+python3 scripts/env_detect.py --init
 
-# 评委偏差审计
-python3 scripts/bias_audit.py
+# 3. Schedule daily evolution
+openclaw cron add --name "🧬 Daily Evolution" --cron "30 19 * * *" --message "Run mu-self-evolve daily workflow"
 ```
 
-## 学术参考
+That's it. The agent will start sedimenting experiences daily and reflecting weekly.
 
-本系统的设计借鉴了以下研究：
+---
 
-- **ExpeL** (arXiv:2308.10144) — 经验提取双层检索（案例+规则）
-- **Reflexion** (arXiv:2303.11366) — 语言化反思作为"语义梯度"
-- **Voyager** (arXiv:2305.16291) — 可执行代码技能库 + 自动课程
-- **MemGPT** (arXiv:2310.08560) — OS 式虚拟内存管理
-- **Generative Agents** (arXiv:2304.03442) — 观察→反思→规划三层记忆
-- **GSME** (2025) — 提议与授信分离（LLM诊断+确定性验证）
-- **The Blind Curator** (2025) — 评委偏差与淘汰机制静默失效
+### 🔒 Security & Privacy
 
-## License
+- **100% Local** — All data stays in your workspace's `.learnings/` directory. No cloud, no API calls, no telemetry.
+- **No External Dependencies** — Python scripts use only the standard library.
+- **No Model Parameters** — Works by organizing text in markdown files, not by fine-tuning or updating weights.
+- **User-Controlled Eviction** — Every archive decision is logged; the bias audit ensures transparency.
 
-MIT
+---
+
+### ⭐ Star History
+
+If mu-self-evolve helps your agent get smarter, consider giving it a star ⭐
+
+[![Star History Chart](https://api.star-history.com/svg?repos=muippt/mu-self-evolve&type=Date)](https://star-history.com/#muippt/mu-self-evolve&Date)
+
+> An AI Agent that learns from its own mistakes — no fine-tuning required.
+
+---
+
+### 👤 About the Author
+
+🎓 Signatory Author of Tsinghua University Press / 2026 Dangdang Influential Author / AI & Large Model Business HR Specialist at a Leading Tech Company / National Level-1 HR Manager / Level-2 Psychological Counselor / Self-taught Designer
+
+📚 Author of [*Visual Team Management*](https://item.m.jd.com/product/14547345.html). Clients include ByteDance, Tencent, Baidu, China Mobile, SMG, BOE…
+
+💡 [WeChat Official Account](https://mp.weixin.qq.com/s/v1JSZvlN5fvbOOHvkvXEtA) / [Xiaohongshu](https://xhslink.com/m/ESxtgUNMdl): muippt
+
+---
+
+### 📄 License & Acknowledgments
+
+[MIT](LICENSE) © 2026 muippt
+
+This project builds on insights from the following research:
+
+- **ExpeL** (arXiv:2308.10144) — Experience extraction with dual-layer retrieval
+- **Reflexion** (arXiv:2303.11366) — Linguistic reflection as "semantic gradient"
+- **Voyager** (arXiv:2305.16291) — Executable skill library + automatic curriculum
+- **MemGPT** (arXiv:2310.08560) — OS-style virtual memory management
+- **Generative Agents** (arXiv:2304.03442) — Observation → reflection → planning memory hierarchy
+- **GSME** (2025) — Propose-and-verify separation (LLM diagnosis + deterministic verification)
+- **The Blind Curator** (2025) — Curator bias and silent eviction mechanism failure
+
+Industry references: CrewAI (half-life decay), Mem0 (LLM-as-editor), ChatGPT Dreaming (async synthesis), Zep (dual-timeline).
+
+> Note: Much of this project was co-created with AI assistance. If you believe your work has been used without proper attribution, please open an issue.
