@@ -10,7 +10,7 @@ assignees: ''
 
 ### Environment / 环境信息
 
-- **Agent type / Agent 类型**: (e.g., CatPaw, Claude, ChatGPT, ...)
+- **Agent type / Agent 类型**: (e.g., OpenClaw, Claude Code, ChatGPT, ...)
 - **OS / 操作系统**: (e.g., macOS 14.0, Ubuntu 22.04, Windows 11)
 - **Python version / Python 版本**: (e.g., 3.11.4)
 - **mu-self-evolve version / 版本**: (e.g., v1.0.0 or commit hash)
