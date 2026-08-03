@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>mu-self-evolve — AI Agent Continuous Self-Evolution</title>
 <meta name="description" content="A continuous self-evolution system for AI Agents — daily experience sedimentation + weekly error reflection. VFM verification, score-based decay eviction, WHERE×WHY pathology archiving, active Skill synthesis.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<meta name="color-scheme" content="light only">
 <style>
 :root{
   --bg:#faf9f7;--bg-warm:#f5f0eb;--bg-card:#fff;--bg-code:#f7f5f2;
@@ -20,7 +21,7 @@
   --font-mono:'SF Mono','Fira Code','JetBrains Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;color-scheme:light only}
 body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7}
 .container{max-width:960px;margin:0 auto;padding:0 28px}
 em{font-style:normal;color:var(--accent)}
@@ -140,7 +141,7 @@ footer{padding:40px 0;border-top:1px solid var(--border-light);background:var(--
 <span data-lang="zh" class="active">中文</span>
 <span data-lang="en">EN</span>
 </div>
-<a href="https://github.com/muippt/mu-self-evolve" class="nav-cta" target="_blank">GitHub</a>
+<a href="https://muippt.github.io/mu-skill-hub/" class="nav-cta" target="_blank"><span data-en="Skill Hub" data-zh="Skill合集">Skill合集</span></a>
 </div>
 </div>
 </nav>
@@ -367,12 +368,13 @@ footer{padding:40px 0;border-top:1px solid var(--border-light);background:var(--
 <a href="https://github.com/muippt/mu-self-evolve" target="_blank">GitHub</a>
 <a href="https://github.com/muippt/mu-self-evolve/blob/main/README.md"><span data-en="Documentation" data-zh="文档">文档</span></a>
 <a href="https://github.com/muippt/mu-self-evolve/blob/main/README_CN.md"><span data-en="中文 README" data-zh="中文 README">中文 README</span></a>
-<a href="https://github.com/muippt/mu-self-evolve/issues"><span data-en="Issues" data-zh="问题反馈">问题反馈</span></a>
+<a href="https://muippt.github.io/mu-skill-hub/" target="_blank"><span data-en="Skill Hub" data-zh="Skill合集">Skill合集</span></a>
 </div>
 <div class="footer-badges">
-<a href="https://mp.weixin.qq.com/s/v1JSZvlN5fvbOOHvkvXEtA" target="_blank"><img data-en-src="https://img.shields.io/badge/muippt-07C160?logo=wechat&logoColor=white" data-zh-src="https://img.shields.io/badge/木先生iPPT-07C160?logo=wechat&logoColor=white" alt="WeChat" height="20"></a>
+<a href="https://mp.weixin.qq.com/s/YLtXENt_7WzO2DgJCFUtPA" target="_blank"><img data-en-src="https://img.shields.io/badge/muippt-07C160?logo=wechat&logoColor=white" data-zh-src="https://img.shields.io/badge/木先生iPPT-07C160?logo=wechat&logoColor=white" alt="WeChat" height="20"></a>
 <a href="https://xhslink.com/m/ESxtgUNMdl" target="_blank"><img data-en-src="https://img.shields.io/badge/muippt-FF2442?logo=xiaohongshu&logoColor=white" data-zh-src="https://img.shields.io/badge/木先生iPPT-FF2442?logo=xiaohongshu&logoColor=white" alt="Xiaohongshu" height="20"></a>
 <a href="https://item.m.jd.com/product/14547345.html" target="_blank"><img data-en-src="https://img.shields.io/badge/Book-Visual%20Team%20Management-BBDDE5?logo=bookstack&logoColor=white" data-zh-src="https://img.shields.io/badge/著作-《图解团队管理》-BBDDE5?logo=bookstack&logoColor=white" alt="Book" height="20"></a>
+<a href="https://muippt.github.io/mu-skill-hub/" target="_blank"><img data-en-src="https://img.shields.io/badge/mu--skillhub-9E95B7?logo=simpleicons&logoColor=white" data-zh-src="https://img.shields.io/badge/mu--skill集合-9E95B7?logo=simpleicons&logoColor=white" alt="mu-skillhub" height="20"></a>
 <a href="https://github.com/muippt" target="_blank"><img src="https://img.shields.io/badge/muippt-181717?logo=github&logoColor=white" alt="GitHub" height="20"></a>
 </div>
 </div>
@@ -390,16 +392,12 @@ footer{padding:40px 0;border-top:1px solid var(--border-light);background:var(--
       var s=img.getAttribute('data-'+lang+'-src');if(s)img.src=s;
     });
     spans.forEach(function(s){s.classList.toggle('active',s.getAttribute('data-lang')===lang)});
-    localStorage.setItem('mu-self-evolve-lang',lang);
-    document.documentElement.lang=lang==='zh'?'zh':'en';
+    document.documentElement.lang=lang==='zh'?'zh-CN':'en';
   }
   spans.forEach(function(s){s.addEventListener('click',function(){applyLang(s.getAttribute('data-lang'))})});
-  var saved=localStorage.getItem('mu-self-evolve-lang');
-  if(saved){applyLang(saved)}
-  else{
-    var bl=(navigator.language||'').toLowerCase();
-    applyLang(bl.startsWith('zh')?'zh':'en');
-  }
+  /* Always start in Chinese + light mode on every page load.
+     No localStorage / navigator.language / prefers-color-scheme restore. */
+  applyLang('zh');
 })();
 </script>
 </body>
