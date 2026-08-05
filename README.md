@@ -154,11 +154,11 @@ That's it. The agent will start sedimenting experiences daily and reflecting wee
 
 ---
 
-### ⭐ Star the Project
+### ⭐ Star History
 
 If mu-self-evolve helps your agent get smarter, consider giving it a star ⭐
 
-[![GitHub Stars](https://img.shields.io/github/stars/muippt/mu-self-evolve?style=flat&logo=github&label=Stars)](https://github.com/muippt/mu-self-evolve/stargazers)
+[![Star History Chart](https://api.star-history.com/svg?repos=muippt/mu-self-evolve&type=Date)](https://star-history.com/#muippt/mu-self-evolve&Date)
 
 > An AI Agent that learns from its own mistakes — no fine-tuning required.
 
