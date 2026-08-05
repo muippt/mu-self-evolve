@@ -158,7 +158,7 @@ That's it. The agent will start sedimenting experiences daily and reflecting wee
 
 If mu-self-evolve helps your agent get smarter, consider giving it a star ⭐
 
-[![Star History Chart](assets/star-history.svg)](https://www.star-history.com/?repos=muippt%2Fmu-self-evolve&type=date)
+[![Star History Chart](assets/star-history.png)](https://www.star-history.com/?repos=muippt%2Fmu-self-evolve&type=date)
 
 > An AI Agent that learns from its own mistakes — no fine-tuning required.
 
