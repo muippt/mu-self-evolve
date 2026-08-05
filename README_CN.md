@@ -158,7 +158,7 @@ openclaw cron add --name "🧬 每日自我进化" --cron "30 19 * * *" --messag
 
 如果 mu-self-evolve 帮助你的 Agent 变得更聪明，欢迎给个 Star ⭐
 
-[![Star History Chart](https://api.star-history.com/svg?repos=muippt/mu-self-evolve&type=Date)](https://star-history.com/#muippt/mu-self-evolve&Date)
+[![Star History Chart](assets/star-history.svg)](https://www.star-history.com/?repos=muippt%2Fmu-self-evolve&type=date)
 
 > 一个会从自己的错误中学习的 AI Agent — 无需微调。
 
